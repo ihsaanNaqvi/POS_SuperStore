@@ -1,0 +1,59 @@
+﻿@page "/BuyProduct"
+@using POS_SuperStore
+
+@using POS.Model;
+@using POS_SuperStore.Service_layer;
+@using Telerik.DataSource;
+@inject IProductService _productService;
+
+
+<div class="demo-section">
+    @if (ValidSubmit)
+    {
+        <div class="demo-alert demo-alert-success" role="alert">
+            The form was submitted successfully.
+        </div>
+    }
+    else
+    {
+
+        <TelerikForm Model="@TheUser"
+                 OnValidSubmit="@HandleValidSubmit"
+                 OnInvalidSubmit="@HandleInvalidSubmit">
+            <FormValidation>
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+            </FormValidation>
+            <FormItems>
+                <FormItem Field="ProductName" LabelText="Name"></FormItem>
+                <FormItem Field="Price" Hint="Price"></FormItem>
+            </FormItems>
+        </TelerikForm>
+    }
+</div>
+
+@code {
+    public Product TheUser { get; set; } 
+
+
+    public bool ValidSubmit { get; set; } = false;
+
+    async void HandleValidSubmit()
+    {
+        ValidSubmit = true;
+
+        await Task.Delay(2000);
+
+        ValidSubmit = false;
+
+        StateHasChanged();
+    }
+      
+    protected override void OnInitialized()
+    {
+        TheUser = new Product();
+    }
+    void HandleInvalidSubmit()
+    {
+        ValidSubmit = false;
+    }
+}

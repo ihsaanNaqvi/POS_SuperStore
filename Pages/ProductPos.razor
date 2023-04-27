@@ -1,0 +1,85 @@
+﻿@page "/Products"
+@using POS.Model;
+@inject HttpClient HttpClient
+
+
+ 
+
+<h2>New Grid</h2>
+@* The usage of the EditorType parameter *@
+
+@using System.ComponentModel.DataAnnotations
+
+<TelerikGrid Data=@products
+             EditMode="@GridEditMode.Inline"
+             Pageable="true"
+             Height="400px"
+             OnCreate="@AddProduct"
+             OnUpdate="@EditProduct"
+             OnDelete="@DeleteProduct">
+            
+              
+
+    <GridToolBarTemplate>
+        <GridCommandButton Command="Add" Icon="@FontIcon.Plus">Add Product</GridCommandButton>
+    </GridToolBarTemplate>
+    <GridColumns>
+        <GridColumn Field=@nameof(product.Id) Title="ID" Editable="false" />
+        <GridColumn Field=@nameof(product.ProductName)
+                    EditorType="@GridEditorType.TextArea"
+                    Title="Name" />
+        <GridColumn Field="Price" DisplayFormat="{0:C2}" />
+        <GridColumn Field="@nameof(Product.Quantity)" />
+        <GridCommandColumn>
+            <GridCommandButton Command="Save" Icon="@FontIcon.Save" ShowInEdit="true">Update</GridCommandButton>
+            <GridCommandButton Command="Edit" Icon="@FontIcon.Pencil">Edit</GridCommandButton>
+            <GridCommandButton Command="Delete" Icon="@FontIcon.Trash">Delete</GridCommandButton>
+            <GridCommandButton Command="Cancel" Icon="@FontIcon.Cancel" ShowInEdit="true">Cancel</GridCommandButton>
+        </GridCommandColumn>
+    </GridColumns>
+</TelerikGrid>
+
+
+
+@code {
+    public IEnumerable<Product> products;
+    public Product product;
+    public ProductViewModel productViewModel;
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        products = await HttpClient.GetJsonAsync<List<Product>>("https://localhost:44381/api/POSProduct");
+    }
+    private async Task AddProduct(GridCommandEventArgs args)
+    {
+        product = (Product)args.Item;
+        productViewModel = new()
+            {
+                ProductName = product.ProductName,
+                Price = product.Price,
+                Quantity = product.Quantity
+            };
+
+        products = await HttpClient.PostJsonAsync<List<Product>>("https://localhost:44381/api/POSProduct", productViewModel);
+
+    }
+
+    //Edit API calling
+    private async Task EditProduct(GridCommandEventArgs args)
+    {
+        product = (Product)args.Item;
+        products = await HttpClient.PutJsonAsync<List<Product>>("https://localhost:44381/api/POSProduct/" + product.Id, product);
+
+    }
+
+    //Delete API calling 
+    private async Task DeleteProduct(GridCommandEventArgs args)
+    {
+         
+        product = (Product)args.Item;
+        await HttpClient.DeleteAsync($"https://localhost:44381/api/POSProduct/{product.Id}");
+        products = await HttpClient.GetJsonAsync<List<Product>>("https://localhost:44381/api/POSProduct");
+         
+    }
+}

@@ -1,0 +1,111 @@
+﻿@page "/ProductsTest"
+@using POS.Model;
+@using POS_SuperStore.Service_layer;
+@using Telerik.DataSource;
+@inject IProductService _productService;
+
+<h2>Product Name: @ProductDto.ProductName </h2>
+<label>Enter Quantity</label>
+<input type="text" @bind=Quantity>
+@if (Quantity != 0)
+{
+    <button @onclick=BuyProduct>Buy</button>    
+}
+<TelerikGrid Class="grid"
+             Data=@products
+             OnUpdate="@UpdateHandler"
+             OnDelete="@DeleteHandler"
+             OnCreate="@CreateHandler"
+             
+
+             ConfirmDelete="true"
+             Pageable="true"
+             Groupable="false"
+             Sortable="true"
+             FilterMode="GridFilterMode.FilterMenu"
+             Resizable="true"
+             Reorderable="false"
+             EditMode="GridEditMode.Popup"
+             SelectionMode="GridSelectionMode.Multiple"
+             OnStateInit="@((GridStateEventArgs<Product> args) => OnInitializedAsync())"
+             PageSize="10"
+             Navigable="true">
+    <GridColumns>
+        <GridCheckboxColumn></GridCheckboxColumn>
+        <GridColumn Field="@nameof(ProductDto.Id)" Title="Id" Width="195px" />
+        <GridColumn Field="@nameof(ProductDto.ProductName)" Title="Product Name" Width="195px" />
+        <GridColumn Field="@nameof(ProductDto.Price)" Width="120px" Title="Price" TextAlign="@ColumnTextAlign.Right"/>
+        <GridColumn Field="@nameof(ProductDto.Quantity)" Width="120px" Title="Quantity" TextAlign="@ColumnTextAlign.Right" />
+
+       
+        <GridCommandColumn Width="260px">
+            <GridCommandButton Command="Edit" Icon="@FontIcon.Pencil" ThemeColor="@ThemeConstants.Button.ThemeColor.Primary">Edit</GridCommandButton>
+            <GridCommandButton Command="Delete" Icon="@FontIcon.Trash">Delete</GridCommandButton>
+            <GridCommandButton   OnClick="@BuyShowProduct" Icon="@FontIcon.Cart" ThemeColor="@ThemeConstants.Button.ThemeColor.Primary">Buy</GridCommandButton>
+           
+        </GridCommandColumn>
+        
+    </GridColumns>
+    <GridToolBarTemplate>
+        <GridCommandButton Command="Add" Icon="@FontIcon.Plus">Add Product</GridCommandButton>
+    </GridToolBarTemplate>
+</TelerikGrid>
+ 
+@code {
+     //public Product TestProduct { get; set; } = new Product();
+    public List<Product> products { get; set; }
+    public Product ProductDto = new();
+    public int Quantity;
+
+    private async Task LoadData()
+    {
+        products = await _productService.GetAllProductsAsync();
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    public async Task UpdateHandler(GridCommandEventArgs args)
+    {
+        var product = (Product)args.Item;
+        products=await _productService.UpdateProductAsync(product);
+    }
+
+    public async Task DeleteHandler(GridCommandEventArgs args)
+    {
+        var product = (Product)args.Item;
+        await _productService.DeleteProductAsync(product.Id);
+        await LoadData();
+    }
+
+    public async Task CreateHandler(GridCommandEventArgs args)
+    {
+        var product = (Product)args.Item;
+        products= await _productService.CreateProduct(product);        
+    }
+
+    private void BuyShowProduct(GridCommandEventArgs args)
+    {
+        ProductDto = (Product)args.Item;
+    }
+
+    private async Task BuyProduct()
+    {        
+        products= await _productService.BuyProductAsync(ProductDto, Quantity);
+        ProductDto=new();
+        Quantity = 0;
+    }
+
+}
+
+<style>
+    .width-100 {
+        width: 100%;
+    }
+
+    .grid .k-grid-content tr {
+        line-height: 32px;
+    }
+</style>
