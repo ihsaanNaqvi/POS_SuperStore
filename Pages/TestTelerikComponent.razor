@@ -1,0 +1,19 @@
+﻿@inject NotificationService NotificationService
+@using Radzen.Blazor;
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
+ 
+
+@*<RadzenButton Text="Click me!" />*@
+
+   
+    
+</RadzenStack>
+ 
+
+@code {
+    private void OnClick(string text)
+    {
+        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "Button Clicked", Detail = text });
+    }
+}

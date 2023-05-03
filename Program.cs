@@ -1,5 +1,6 @@
 using POS_SuperStore.Data;
 using POS_SuperStore.Service_layer;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddTelerikBlazor();
+builder.Services.AddScoped<DialogService>();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<TooltipService>();
+builder.Services.AddScoped<ContextMenuService>();
 //builder.Services.AddDbContext<POSDBContext>(item => item.UseSqlServer(configuration.GetConnectionString("myconn")));
 
 

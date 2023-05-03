@@ -36,8 +36,7 @@
         <GridColumn Field="@nameof(ProductDto.ProductName)" Title="Product Name" Width="195px" />
         <GridColumn Field="@nameof(ProductDto.Price)" Width="120px" Title="Price" TextAlign="@ColumnTextAlign.Right"/>
         <GridColumn Field="@nameof(ProductDto.Quantity)" Width="120px" Title="Quantity" TextAlign="@ColumnTextAlign.Right" />
-
-       
+    @*    <GridCommandButton Command="CustomAction" Icon="@FontIcon.CustomIcon" ThemeColor="@ThemeConstants.Button.ThemeColor.Primary">Custom Action</GridCommandButton>*@
         <GridCommandColumn Width="260px">
             <GridCommandButton Command="Edit" Icon="@FontIcon.Pencil" ThemeColor="@ThemeConstants.Button.ThemeColor.Primary">Edit</GridCommandButton>
             <GridCommandButton Command="Delete" Icon="@FontIcon.Trash">Delete</GridCommandButton>
