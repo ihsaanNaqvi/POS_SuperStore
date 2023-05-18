@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using POS_SuperStore.Data;
+using POS_SuperStore.Interfaces;
+using POS_SuperStore.Repository;
 using POS_SuperStore.Service_layer;
 using Radzen;
 
@@ -17,7 +20,12 @@ builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
-//builder.Services.AddDbContext<POSDBContext>(item => item.UseSqlServer(configuration.GetConnectionString("myconn")));
+builder.Services.AddSingleton<TaskService>();
+var provider=builder.Services.BuildServiceProvider();
+var configuration=provider.GetRequiredService<IConfiguration>();
+builder.Services.AddDbContext<POSDBContext>(item => item.UseSqlServer(configuration.GetConnectionString("myconn")));
+ 
+builder.Services.AddScoped<ItemInvdetail, INVInventoryDetail>();
 
 
 var app = builder.Build();

@@ -1,0 +1,232 @@
+﻿@page "/Item-view"
+@using POS_SuperStore.Interfaces;
+@using POS_SuperStore.ViewModel;
+@layout MainLayout
+@inject ItemInvdetail iNVInventoryDetail;
+
+<RadzenContent Container="main">
+    <ChildContent>
+        <div class="row breadcrumbBar justify-content-center align-items-center pb-3">
+            <div class="col-md-6">
+                <div class="row no-gutters">
+                    <RadzenBreadCrumb>
+                        <RadzenBreadCrumbItem Path="/Index" Text="@("Home")" />
+
+                        <RadzenBreadCrumbItem Path="/contact-list" Text="@("Contact_List")" />
+
+                        <RadzenBreadCrumbItem Text="@("Contact_Details")" />
+                    </RadzenBreadCrumb>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                <div class="backtoDashboard">
+                    <RadzenButton ButtonStyle="ButtonStyle.Secondary"
+                                  Size="ButtonSize.Small"
+                                  title="@("Go_Back_Dashboard")"
+                                  class="returnBtn" Icon="dashboard" Click="@GoBackDashboard" />
+                    <RadzenButton ButtonStyle="ButtonStyle.Secondary"
+                                  Size="ButtonSize.Small"
+                                  title="@("Go_Back_HomeScreen")"
+                                  class="returnBtn"
+                                  Icon="home" Click="@GoBackHomeScreen" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row TitleBar justify-content-left align-items-center py-4">
+            <div class="col-md-6">
+                <div class="row no-gutters">
+                    <RadzenHeading Size="H1" Text="@("Item_Details")" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row d-block justify-content-left p-0 m-0 tab-webkit-fill">
+            <RadzenCard>
+                <RadzenAccordion>
+                    <Items>
+                        <RadzenAccordionItem Text="@("Item_Details")" Selected="true">
+                            <div class="row pb-2">
+                                <div class="col-12 datagrid-rz-label">
+                                    <div class="row no-gutters">
+
+                                        <div class="col-6 detailSection">
+                                            <div class="detailHeading">
+                                                <h3>@("Request_Id")</h3>
+                                            </div>
+                                            <div class="detailContent">
+                                                <h3>@inventoryDetailVM.RequestId</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 detailSection">
+                                            <div class="detailHeading">
+                                                <h3>@("Item_Category")</h3>
+                                            </div>
+                                            <div class="detailContent">
+                                                <h3>@inventoryDetailVM?.ItemCategory</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 detailSection">
+                                            <div class="detailHeading">
+                                                <h3>@("Item_Name")</h3>
+                                            </div>
+                                            <div class="detailContent">
+                                                <h3>@inventoryDetailVM?.ItemName</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 detailSection">
+                                            <div class="detailHeading">
+                                                <h3>@("Item_Code")</h3>
+                                            </div>
+                                            <div class="detailContent">
+                                                <h3>@inventoryDetailVM?.ItemCode</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 detailSection">
+                                            <div class="detailHeading">
+                                                <h3>@("Request_By")</h3>
+                                            </div>
+                                            <div class="detailContent">
+                                                <h3>@inventoryDetailVM?.RequestBy</h3>
+                                            </div>
+                                        </div><div class="col-6 detailSection">
+                                            <div class="detailHeading">
+                                                <h3>@("Request_Date")</h3>
+                                            </div>
+                                            <div class="detailContent">
+                                                <h3>@inventoryDetailVM?.RequestDate</h3>
+                                            </div>
+                                        </div>
+                                         
+                                            <div class="col-6 detailSection">
+                                                <div class="detailHeading">
+                                                    <h3>@("Quantity")</h3>
+                                                </div>
+                                                <div class="detailContent">
+                                                    <h3>@inventoryDetailVM?.Quantity</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 detailSection">
+                                                <div class="detailHeading">
+                                                    <h3>@("status")</h3>
+                                                </div>
+                                                <div class="detailContent">
+                                                    <h3>@inventoryDetailVM?.status</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 detailSection">
+                                                <div class="detailHeading">
+                                                    <h3>@("Description")</h3>
+                                                </div>
+                                                <div class="detailContent">
+                                                    <h3>@inventoryDetailVM?.Description</h3>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-6 detailSection">
+                                                <div class="detailHeading">
+                                                    <h3>@("Special_Instruction")</h3>
+                                                </div>
+                                                <div class="detailContent">
+                                                    <h3>@inventoryDetailVM?.SpecialInstruction</h3>
+                                                </div>
+                                            </div>
+                                         
+                                    </div>
+                                </div>
+                            </div>
+                        </RadzenAccordionItem>
+                      @* <RadzenAccordionItem Text="@("Document_Details")" Selected="true">*@
+                            @*<FileUpload ReferenceGuid="Guid.Parse(ContactId)"
+                                                           IsViewOnly="true"
+                            IsCaseRequest="true"
+                                                           ModuleId="(int)WorkflowModuleEnum.CNTContactManagement" />*@
+                           @* <FileUpload
+                                        ModuleId="(int)WorkflowModuleEnum.CNTContactManagement"
+                                        ReferenceGuid="@Guid.Parse(ContactId)"
+                                        IsCaseRequest="true"
+                                        IsViewOnly="true" />*@
+                       @* </RadzenAccordionItem>*@
+                 @*    <RadzenAccordionItem Text="@("Linked_File_Details")" >
+                            <div class="row pb-2">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="tableContent table-responsive">
+                                        <RadzenDataGrid @ref="CaseGrid"
+                                                        AllowPaging="true"
+                                                        PageSize="@systemSettingState.Grid_Pagination"
+                                                        Data="@contactConsultationCaseList"
+                                                        TItem="ContactCaseConsultationListVM"
+                                                        EmptyText="@("No_record_found")"
+                                                        Width="100%"
+                                                        AllowFiltering="true"
+                                                        FilterMode="Radzen.FilterMode.Advanced"
+                                                        AllowSorting="true"
+                                                        PagerHorizontalAlign="HorizontalAlign.Center">
+                                            <Columns>
+                                                <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="FileName" Title="@("File_Name")" />
+                                                <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="FileNumber" Title="@("File_Number")" />
+
+                                                @if (Thread.CurrentThread.CurrentUICulture.Name == "en-US")
+                                                {
+                                                    <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="StatusEn" Title="@("Status")" />
+                                                    <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="RequestTypeEn" Title="@("Type_Request")" />
+                                                }
+                                                else
+                                                {
+                                                    <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="StatusAr" Title="@("Status")" />
+                                                    <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="RequestTypeAr" Title="@("Type_Request")" />
+
+                                                }
+                                                <RadzenDataGridColumn TItem="ContactCaseConsultationListVM" Property="CreatedDate" FormatString="{0:MM/dd/yyyy}" Title="@("Created_Date")" />
+
+                                            </Columns>
+                                        </RadzenDataGrid>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </RadzenAccordionItem>*@
+
+                        <RadzenAccordionItem Text="@("Item_Details_view")">
+                            <div class="row pb-2">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="tableContent table-responsive">
+                                        <RadzenDataGrid @ref="RequestGrid"
+                                                        AllowPaging="true"                                                        
+                                                        Data="@inventoryDetailVMs"
+                                                        TItem="InventoryDetailVM"
+                                                        EmptyText="@("No_record_found")"
+                                                        Width="100%"
+                                                        AllowFiltering="true"
+                                                        FilterMode="Radzen.FilterMode.Advanced"
+                                                        AllowSorting="true"
+                                                        PagerHorizontalAlign="HorizontalAlign.Center">
+                                            <Columns>
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="RequestId" Title="@("Request_Id")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="ItemCategory" Title="@("Item_Category")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="ItemName" Title="@("Item_Name")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="ItemCode" Title="@("Item_Code")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="RequestBy" Title="@("Request_By")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="RequestDate" FormatString="{0:MM/dd/yyyy}" Title="@("Request_Date")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="Quantity" Title="@("Quantity")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="status" Title="@("status")" />
+                                                <RadzenDataGridColumn TItem="InventoryDetailVM" Property="Description" Title="@("Description")" />
+                                                
+                                            </Columns>
+                                        </RadzenDataGrid>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </RadzenAccordionItem>
+
+                    </Items>
+                </RadzenAccordion>
+               
+
+
+            </RadzenCard>
+        </div>
+
+    </ChildContent>
+</RadzenContent>

@@ -1,0 +1,43 @@
+﻿@page "/Reject-Reason"
+@layout MainLayout
+@using POS_SuperStore.Data;
+@using POS_SuperStore.Pages;
+@using Radzen;
+<PageTitle>Rejection_Reason</PageTitle>
+<RadzenContent Container="main">
+	<ChildContent>
+		<RadzenTemplateForm Submit="@Form0Submit"
+							Data="@rejectReason"
+							Visible="@(rejectReason != null)"
+							TItem="RejectReason">
+			<ChildContent>
+				<div class="col-12">
+					<div class="row">
+						<div class="form-group">
+							<RadzenLabel Text="@("Reason")" Component="Reason" />
+							<RadzenTextArea Placeholder="@("Reason")"
+											@bind-Value="@rejectReason.Reason"
+											Cols="20"
+											Rows="5"
+											Class="w-100"
+											Name="Reason" />
+							<RadzenRequiredValidator Component="Reason" Text="@("Required_Field")"/>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 p-0">
+							<RadzenButton ButtonStyle="ButtonStyle.Light"
+										  ButtonType="Radzen.ButtonType.Submit"
+										  Text="@("Save")" />
+						</div>
+					</div>
+				</div>
+			</ChildContent>
+		</RadzenTemplateForm>
+
+
+	</ChildContent>
+</RadzenContent>
+
+	

@@ -1,0 +1,64 @@
+﻿@page "/Testviewdetail"
+@using POS.Model;
+@inject HttpClient HttpClient
+@using POS_SuperStore.Interfaces;
+@layout MainLayout
+@inject ItemInvdetail iNVInventoryDetail;
+
+ 
+
+
+
+
+
+
+
+
+<h2>New Grid</h2>
+@* The usage of the EditorType parameter *@
+
+@using System.ComponentModel.DataAnnotations
+
+<TelerikGrid Data=@inventoryDetailVMs
+             EditMode="@GridEditMode.Inline"
+             Pageable="true"
+             Height="400px">
+            @* OnCreate="@AddProduct"
+             OnUpdate="@EditProduct"
+             OnDelete="@DeleteProduct">*@
+
+
+
+    
+
+
+<GridToolBarTemplate>
+    <GridCommandButton Command="Add" Icon="@FontIcon.Plus">Add Product</GridCommandButton>
+</GridToolBarTemplate>
+<GridColumns>
+    <GridColumn Field=@nameof(inventoryDetailVM.RequestId) Title="ID" Editable="false" />
+    <GridColumn Field=@nameof(inventoryDetailVM.ItemCategory) />
+    <GridColumn Field=@nameof(inventoryDetailVM.ItemName) />
+    <GridColumn Field=@nameof(inventoryDetailVM.ItemCode) />
+    <GridColumn Field=@nameof(inventoryDetailVM.RequestBy) />
+    <GridColumn Field=@nameof(inventoryDetailVM.RequestDate) />
+    <GridColumn Field=@nameof(inventoryDetailVM.Quantity) />
+    <GridColumn Field=@nameof(inventoryDetailVM.status) />
+    <GridColumn Field=@nameof(inventoryDetailVM.Description)/>
+    <GridColumn Field=@nameof(inventoryDetailVM.SpecialInstruction)/>
+                @*EditorType="@GridEditorType.TextArea"
+                Title="ItemCategory" />
+    <GridColumn Field="ItemName" DisplayFormat="{0:C2}" />*@
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
+             
+            <RadzenButton Shade="Shade.Darker" Click=@(args => Onclick("view detail")) Text="view detail" ButtonStyle="ButtonStyle.Info" />
+             
+        </RadzenStack>
+    <GridCommandColumn>
+        @*<GridCommandButton Command="Save" Icon="@FontIcon.Save" ShowInEdit="true">Update</GridCommandButton>
+        <GridCommandButton Command="Edit" Icon="@FontIcon.Pencil">Edit</GridCommandButton>
+        <GridCommandButton Command="Delete" Icon="@FontIcon.Trash">Delete</GridCommandButton>
+        <GridCommandButton Command="Cancel" Icon="@FontIcon.Cancel" ShowInEdit="true">Cancel</GridCommandButton>*@
+    </GridCommandColumn>
+</GridColumns>
+</TelerikGrid>
